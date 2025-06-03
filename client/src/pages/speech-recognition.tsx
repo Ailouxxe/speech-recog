@@ -3,7 +3,6 @@ import { Mic, MicOff, Trash2, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { ErrorModal } from '@/components/ErrorModal';
 import { SuccessToast } from '@/components/SuccessToast';
@@ -25,7 +24,6 @@ const browserSupport = [
 
 export default function SpeechRecognition() {
   const [language, setLanguage] = useState('en-US');
-  const [continuous, setContinuous] = useState(true);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -40,7 +38,7 @@ export default function SpeechRecognition() {
     clearTranscript,
     resetError
   } = useSpeechRecognition({
-    continuous,
+    continuous: true,
     interimResults: true,
     language
   });
@@ -165,18 +163,14 @@ export default function SpeechRecognition() {
                     }`}
                     onClick={handleToggleRecording}
                   >
-                    {isListening ? (
-                      <MicOff className="w-6 h-6" />
-                    ) : (
-                      <Mic className="w-6 h-6" />
-                    )}
+                    <Mic className="w-6 h-6" />
                   </Button>
                   
                   {/* Recording Animation Rings */}
                   {isListening && (
                     <>
-                      <div className="absolute inset-0 rounded-full border-4 border-primary opacity-30 animate-ping"></div>
-                      <div className="absolute inset-0 rounded-full border-2 border-primary opacity-20 animate-pulse-slow"></div>
+                      <div className="absolute inset-0 rounded-full border-4 border-red-500 opacity-30 animate-ping"></div>
+                      <div className="absolute inset-0 rounded-full border-2 border-red-500 opacity-20 animate-pulse-slow"></div>
                     </>
                   )}
                 </div>
@@ -256,14 +250,6 @@ export default function SpeechRecognition() {
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Settings</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-700">Continuous Listening</label>
-                    <Switch
-                      checked={continuous}
-                      onCheckedChange={setContinuous}
-                    />
-                  </div>
-                  
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700">Language</label>
                     <Select value={language} onValueChange={setLanguage}>
@@ -278,6 +264,15 @@ export default function SpeechRecognition() {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-800 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      Click the microphone button again to stop recording
+                    </p>
                   </div>
                 </div>
               </CardContent>
