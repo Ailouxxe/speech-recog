@@ -25,13 +25,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"), // ✅ Correct path
+    outDir: path.resolve(import.meta.dirname, "dist"), // ✅ changed from dist/public to dist
     emptyOutDir: true,
-  },
-  server: {
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
-    },
   },
 });
