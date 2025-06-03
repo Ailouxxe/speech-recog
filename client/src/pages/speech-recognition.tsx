@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Mic, MicOff, Trash2, Copy } from 'lucide-react';
+import { Mic, MicOff, Trash2, Copy, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -186,6 +186,20 @@ export default function SpeechRecognition() {
                     }
                   </p>
                 </div>
+
+                {/* Stop Button (only show when listening) */}
+                {isListening && (
+                  <div className="flex justify-center">
+                    <Button 
+                      variant="destructive"
+                      onClick={stopListening}
+                      className="flex items-center space-x-2 bg-red-500 hover:bg-red-600"
+                    >
+                      <Square className="w-4 h-4" />
+                      <span>Stop Recording</span>
+                    </Button>
+                  </div>
+                )}
 
                 {/* Control Buttons */}
                 <div className="flex items-center justify-center space-x-4">
