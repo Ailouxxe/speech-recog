@@ -105,10 +105,12 @@ export function useSpeechRecognition(
   }, [isListening]);
 
   const stopListening = useCallback(() => {
-    if (recognitionRef.current && isListening) {
+    if (recognitionRef.current) {
       recognitionRef.current.stop();
+      setIsListening(false);
+      setInterimTranscript('');
     }
-  }, [isListening]);
+  }, []);
 
   const clearTranscript = useCallback(() => {
     setFinalTranscript('');
